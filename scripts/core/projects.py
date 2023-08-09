@@ -26,7 +26,8 @@ def create_project(project: Project):
 def show_user():
     projects = session.query(models.Projects).all()
     for doc in projects:
-        print(doc)
-    print(projects)        
-    # return projects
+        if len(doc.tasks) >0 :
+            print(doc.tasks[0])
+    # print(projects)        
+    return projects
 

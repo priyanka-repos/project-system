@@ -10,14 +10,14 @@ class Members(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     createDate = Column(Date)
-    project_id = Column(Integer, ForeignKey('Projects.id'))
-    project = relationship("Projects", back_populates="members")
+    project_id = Column(Integer, ForeignKey('Projects.id'))  #
+    project = relationship("Projects", back_populates="members")  #
 
 class Tasks(Base):
     __tablename__ = 'Tasks'
     
     task_id = Column(Integer, primary_key=True)
-    project_id = Column(Integer, ForeignKey('Projects.id'))
+    project_id = Column(Integer, ForeignKey('Projects.id')) #member_id
     title = Column(String)
     description = Column(String)
     createDate = Column(Date)
@@ -32,4 +32,5 @@ class Projects(Base):
     name = Column(String)
     createDate = Column(Date)
     members = relationship("Members", back_populates="project")
-    tasks = relationship("Tasks", back_populates="project")
+    tasks = relationship("Tasks", back_populates="project")  #remove
+    #member list

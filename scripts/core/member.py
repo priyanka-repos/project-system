@@ -15,7 +15,7 @@ Base.metadata.create_all(engine)
 session = Session()
 @userRouter.post("/")
 def create_user(member: Member):
-    new_user = Members(id = member.id, name=member.name, createDate = member.createDate, project_id = 1)
+    new_user = Members(id = member.id, name=member.name, createDate = member.createDate, project_id = member.project_id)
     session.add(new_user)
     session.commit()
     session.refresh(new_user)

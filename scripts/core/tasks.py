@@ -16,7 +16,7 @@ session = Session()
 
 @taskRouter.post("/create")
 def create_project(task: Task):
-    new_task = models.Tasks(task_id = task.taskid, title=task.title, description=task.description, createDate = task.createDate, modifiedDate=task.modifiedDate, status=task.status)
+    new_task = models.Tasks(task_id = task.taskid,project_id=task.projectid, title=task.title, description=task.description, createDate = task.createDate, modifiedDate=task.modifiedDate, status=task.status)
     session.add(new_task)
     session.commit()
     session.refresh(new_task)

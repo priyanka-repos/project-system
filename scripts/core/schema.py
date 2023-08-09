@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic.schema import Optional
 from datetime import datetime, date
 from typing import List
 
@@ -6,6 +7,7 @@ class Member(BaseModel):
     id: int
     name : str
     createDate : date
+    project_id : int
     class Config():
         orm_mode = True
 
@@ -19,9 +21,17 @@ class Task(BaseModel):
     createDate: date
     modifiedDate: date
     status: str
-    # class Config():
-    #     orm_mode = True
+    class Config():
+        orm_mode = True
 
+class ShowTask(BaseModel):
+    taskid: int
+    projectid: int
+    title: str
+    description: str
+    createDate: date
+    modifiedDate: date
+    status: str
 
 class Project(BaseModel):
     id: int
@@ -36,9 +46,9 @@ class Project(BaseModel):
 class ShowProject(BaseModel):
     id: int
     name: str
-    createDate: date
+    createDate: Optional[date] = None
     members: List[Member]
-    # tasks: List[Task]
+    tasks: Optional[List[Task]] = None
     class Config():
         orm_mode = True
 
@@ -47,7 +57,7 @@ class ShowMember(BaseModel):
     name : str
     createDate : date
     project_id : int
-    project: List[Project]
+    project: Project
     class Config():
         orm_mode = True
 
