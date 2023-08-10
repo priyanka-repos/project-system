@@ -25,9 +25,9 @@ def create_project(project: Project):
 @projectRouter.get("/get",response_model=List[ShowProject])
 def show_user():
     projects = session.query(models.Projects).all()
-    for doc in projects:
-        if len(doc.tasks) >0 :
-            print(doc.tasks[0])
+    # for doc in projects:
+    #     if len(doc.tasks) >0 :
+    #         print(doc.tasks[0])
     # print(projects)        
     return projects
 

@@ -10,7 +10,7 @@ class Members(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     createDate = Column(Date)
-    project_id = Column(Integer, ForeignKey('Projects.id'))  #
+    project_id = Column(Integer, ForeignKey('Projects.id'))  #remove
     project = relationship("Projects", back_populates="members")  #
 
 class Tasks(Base):

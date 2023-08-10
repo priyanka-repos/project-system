@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from typing import List
-from .models import Base,Members
+from .models import Base,Members,Projects
 from sqlalchemy.orm import Session
 from scripts.core.schema import Member,Project,ShowProject,ShowMember
 
@@ -24,6 +24,15 @@ def create_user(member: Member):
 @userRouter.get("/",response_model=List[ShowMember])
 def show_user():
     users = session.query(Members).all()
-    
     return users
+
+@userRouter.delete("/delete/{id}")
+def delete_task(id:int):
+    try:
+        session.query(Members).filter(Members.id == id).delete()
+        # session.query(Projects).filter(Projects.members[id])
+        return "Deleted"
+    except Exception as e:
+        print("Error in deleting task")
+        return "Unable to delete "
     
