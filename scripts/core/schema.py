@@ -11,8 +11,6 @@ class Member(BaseModel):
     class Config():
         orm_mode = True
 
-
-
 class Task(BaseModel):
     task_id: int
     project_id: int

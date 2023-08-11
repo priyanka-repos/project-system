@@ -24,18 +24,20 @@ def create_task(task: Task):
 
 @taskRouter.get("/get",response_model=List[ShowTask])
 def show_task():
-    tasks = session.query(models.Tasks).all()
-    # for doc in tasks:
-    #     print(doc)
-    # print(tasks) 
-    return tasks       
+    try:
+        tasks = session.query(models.Tasks).all()
+        return tasks 
+    except Exception as e:
+        return "Unable to fetch data"      
 
 @taskRouter.delete("/delete/{id}")
 def delete_task(id:int):
     try:
         session.query(models.Tasks).filter(models.Tasks.task_id == id).delete()
+        session.commit()
         return "Deleted"
     except Exception as e:
+        session.rollback()
         print("Error in deleting task")
         return "Unable to delete "
     

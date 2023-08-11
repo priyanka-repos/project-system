@@ -15,24 +15,32 @@ Base.metadata.create_all(engine)
 session = Session()
 @userRouter.post("/")
 def create_user(member: Member):
-    new_user = Members(id = member.id, name=member.name, createDate = member.createDate, project_id = member.project_id)
-    session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
-    return new_user
+    try:
+        new_user = Members(id = member.id, name=member.name, createDate = member.createDate, project_id = member.project_id)
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
+        return new_user
+    except Exception as e:
+        return "Unable to add data"
 
 @userRouter.get("/",response_model=List[ShowMember])
 def show_user():
-    users = session.query(Members).all()
-    return users
+    try:
+        users = session.query(Members).all()
+        return users
+
+    except Exception as e:
+        return "Unable to fetch data"
 
 @userRouter.delete("/delete/{id}")
 def delete_task(id:int):
     try:
         session.query(Members).filter(Members.id == id).delete()
-        # session.query(Projects).filter(Projects.members[id])
+        session.commit()
         return "Deleted"
     except Exception as e:
+        session.rollback()
         print("Error in deleting task")
-        return "Unable to delete "
+        return "Unable to delete"
     
